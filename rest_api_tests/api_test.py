@@ -203,7 +203,40 @@ def outpainting_test():
     print(f"[Outpaint] response from server was : {res.status_code}")
 
 
+def txt2img_test():
+    prompt = "Paint a rabbit in a top hate"
+    negative_prompt = "ugly, bad art, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, blurry, bad anatomy, blurred, watermark, grainy, tiling, signature, cut off, draft"
+    seed = 2121991605
+    height = 512
+    width = 512
+    steps = 50
+    cfg_scale = 7
+
+    url = "http://127.0.0.1:8080/sdapi/v1/txt2img"
+
+    headers = {
+        "User-Agent": "PythonTest",
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+    }
+
+    data = {
+        "prompt": prompt,
+        "negative_prompt": negative_prompt,
+        "seed": seed,
+        "height": height,
+        "width": width,
+        "steps": steps,
+        "cfg_scale": cfg_scale,
+    }
+
+    res = requests.post(url=url, json=data, headers=headers, timeout=1000)
+
+    print(f"[txt2img]response from server was : {res.status_code}")
+
+
 if __name__ == "__main__":
+    txt2img_test()
     img2img_test()
     upscaler_test()
     inpainting_test()
