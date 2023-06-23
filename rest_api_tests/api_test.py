@@ -14,7 +14,7 @@ def upscaler_test():
     steps = 50
     noise_level = 10
     cfg_scale = 7
-    image_path = r"./rest_api_tests/dog.png"
+    image_path = r"../dog.png"
 
     # Converting Image to base64
     img_file = open(image_path, "rb")
@@ -57,7 +57,7 @@ def img2img_test():
     steps = 50
     denoising_strength = 0.75
     cfg_scale = 7
-    image_path = r"./rest_api_tests/dog.png"
+    image_path = r"../dog.png"
 
     # Converting Image to Base64
     img_file = open(image_path, "rb")
@@ -235,9 +235,5 @@ def txt2img_test():
     print(f"[txt2img]response from server was : {res.status_code}")
 
 
-if __name__ == "__main__":
-    txt2img_test()
-    img2img_test()
-    upscaler_test()
-    inpainting_test()
-    outpainting_test()
+img2img_test()
+upscaler_test()
