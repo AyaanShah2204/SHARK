@@ -24,8 +24,7 @@
 
 import numpy as np
 
-
-def get_intrinsics(H, W):
+def get_intrinsics(H,W):
     """
     Intrinsics for a pinhole camera model.
     Assume fov of 55 degrees and central principal point.
@@ -33,10 +32,12 @@ def get_intrinsics(H, W):
     f = 0.5 * W / np.tan(0.5 * 55 * np.pi / 180.0)
     cx = 0.5 * W
     cy = 0.5 * H
-    return np.array([[f, 0, cx], [0, f, cy], [0, 0, 1]])
-
+    return np.array([[f, 0, cx],
+                     [0, f, cy],
+                     [0, 0, 1]])
 
 def depth_to_points(depth, R=None, t=None):
+
     K = get_intrinsics(depth.shape[1], depth.shape[2])
     Kinv = np.linalg.inv(K)
     if R is None:
@@ -90,8 +91,7 @@ def create_triangles(h, w, mask=None):
     br = (y + 1) * w + x + 1
     triangles = np.array([tl, bl, tr, br, tr, bl])
     triangles = np.transpose(triangles, (1, 2, 0)).reshape(
-        ((w - 1) * (h - 1) * 2, 3)
-    )
+        ((w - 1) * (h - 1) * 2, 3))
     if mask is not None:
         mask = mask.reshape(-1)
         triangles = triangles[mask[triangles].all(1)]

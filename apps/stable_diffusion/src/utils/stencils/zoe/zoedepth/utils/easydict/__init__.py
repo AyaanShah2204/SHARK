@@ -4,7 +4,6 @@ Copy/pasted from https://github.com/makinacorpus/easydict
 Original author: Mathieu Leplatre <mathieu.leplatre@makina-corpus.com>
 """
 
-
 class EasyDict(dict):
     """
     Get attributes
@@ -40,7 +39,7 @@ class EasyDict(dict):
     {'a': 1}
     >>> EasyDict((('a', 1), ('b', 2)))
     {'a': 1, 'b': 2}
-
+    
     Set attributes
 
     >>> d = EasyDict()
@@ -118,29 +117,24 @@ class EasyDict(dict):
     ...
     AttributeError: 'EasyDict' object has no attribute 'a'
     """
-
     def __init__(self, d=None, **kwargs):
         if d is None:
             d = {}
         else:
-            d = dict(d)
+            d = dict(d)        
         if kwargs:
             d.update(**kwargs)
         for k, v in d.items():
             setattr(self, k, v)
         # Class attributes
         for k in self.__class__.__dict__.keys():
-            if not (k.startswith("__") and k.endswith("__")) and not k in (
-                "update",
-                "pop",
-            ):
+            if not (k.startswith('__') and k.endswith('__')) and not k in ('update', 'pop'):
                 setattr(self, k, getattr(self, k))
 
     def __setattr__(self, name, value):
         if isinstance(value, (list, tuple)):
-            value = [
-                self.__class__(x) if isinstance(x, dict) else x for x in value
-            ]
+            value = [self.__class__(x)
+                     if isinstance(x, dict) else x for x in value]
         elif isinstance(value, dict) and not isinstance(value, self.__class__):
             value = self.__class__(value)
         super(EasyDict, self).__setattr__(name, value)
@@ -161,5 +155,4 @@ class EasyDict(dict):
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()

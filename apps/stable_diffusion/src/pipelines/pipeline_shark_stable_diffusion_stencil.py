@@ -136,6 +136,12 @@ class StencilPipeline(StableDiffusionPipeline):
             else:
                 latent_model_input_1 = latent_model_input
 
+            input = (latent_model_input_1,)
+            print(input[0].shape)
+            for a in input:
+                print(a.shape)
+                print(f'pipeline: {np.asarray(a, dtype=None, order="C").dtype}')
+            
             control = self.controlnet(
                 "forward",
                 (
